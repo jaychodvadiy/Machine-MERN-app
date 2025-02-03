@@ -1,17 +1,16 @@
 const express = require("express");
-const dotenv = require("dotenv");
+const dotenv = require('dotenv').config();
 const cors = require("cors");
 const dbConnect = require("./config/db");
-
-dotenv.config(); // Load environment variables
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Call dbConnect to connect to MongoDB
+// Connect to MongoDB
 dbConnect();
 
+// Use the auth routes
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/agents", require("./routes/agentRoutes"));
 app.use("/api/lists", require("./routes/listRoutes"));

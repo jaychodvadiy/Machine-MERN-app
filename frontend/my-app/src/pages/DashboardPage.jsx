@@ -1,11 +1,14 @@
 import React from "react";
-import AdminDashboard from "../components/AdminDashboard";
+import Navbar from "../components/Navbar";
 
 const DashboardPage = () => {
   return (
     <div>
-      <h1>Admin Dashboard</h1>
-      <AdminDashboard />
+      <Navbar />
+      <div className="p-6">
+        <h1 className="text-3xl font-bold">User Dashboard</h1>
+        <p className="text-gray-600 mt-4">Welcome to your user dashboard!</p>
+      </div>
     </div>
   );
 };
