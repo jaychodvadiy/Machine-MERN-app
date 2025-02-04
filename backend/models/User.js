@@ -1,11 +1,22 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-  name: { type: String, required: true, default: "Default Name" },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true }, // You can hash the password before storing
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true, // Ensures the email field is indexed for faster queries
+  },
+
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
-const User = mongoose.model('User', userSchema);
-
+const User = mongoose.model("User", userSchema);
 module.exports = User;

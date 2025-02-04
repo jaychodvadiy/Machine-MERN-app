@@ -1,50 +1,64 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken"); // To issue a JWT token
-// const userModel = require("../models/User"); // Adjust the path as per your project structure
+const User = require("../models/User"); // Assuming your User model is correctly imported
 const router = express.Router();
+const { body, validationResult } = require("express-validator");
 
-router.post("/register", async (req, res) => {
+// POST /register - User registration
+router.post(
+  "/register",
+  [
+    body("name").notEmpty().withMessage("Name is required"),
+    body("email").isEmail().withMessage("Please provide a valid email"),
+    body("password")
+      .isLength({ min: 6 })
+      .withMessage("Password must be at least 6 characters long"),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors: errors.array(),
+      });
+    }
 
-    const { name, email, password} = req.body;
-  
+    const { name, email, password } = req.body;
     try {
-      let user = await User.findOne({ email: email });
-  
-      if (user) {
-        return res
-          .status(400)
-          .json({
-            success: false,
-            message: "User already exists. Use diffrent mail Id",
-          });
+      const existingUser = await User.findOne({ email });
+
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          message: "User already exists. Use a different email ID",
+        });
       }
-  
+
       const salt = await bcrypt.genSalt(10);
-      const hashpassword = await bcrypt.hash(password, salt);
-  
-      user = new User({
+      const hashedPassword = await bcrypt.hash(password, salt);
+
+      const newUser = new User({
         name,
         email,
-        password: hashpassword,
+        password: hashedPassword,
       });
-  
-      await user.save();
-      return res
-        .status(200)
-        .json({ success: true, message: "User successfully created" });
+
+      await newUser.save();
+      return res.status(201).json({
+        success: true,
+        message: "User successfully created",
+      });
     } catch (error) {
-      console.log(error);
-      return res
-        .status(500)
-        .json({ success: false, message: "Something went wrong" });
+      console.error("❌ Error during user registration:", error);
+      return res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        error: error.message,
+      });
     }
-  })
-
-
-
-
-
+  }
+);
 
 // POST route for login
 router.post("/login", async (req, res) => {

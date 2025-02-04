@@ -10,22 +10,18 @@ import HomePage from "./pages/HomePage";
 import AdminDashboard from "./components/AdminDashboard";
 import AgentListPage from "./components/AgentList";
 import UploadPage from "./components/UploadPage";
-import DashboardPage from "./pages/DashboardPage";
+import Register from "./pages/RegisterPage";
 
 const App = () => {
   const isLoggedIn = localStorage.getItem("token");
-  
 
-
-return (
+  return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<Register />} />
         <Route
-          path="/home"
-          element={
-            isLoggedIn ? <Navigate to="/home" /> : <Navigate to="/login" />
-          }
+          path="/login"
+          element={isLoggedIn ? <LoginPage /> : <Navigate to="/home" />}
         />
         <Route
           path="/home"

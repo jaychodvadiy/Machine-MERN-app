@@ -1,22 +1,18 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-// const bcrypt = require("bcryptjs");
 
 exports.registerUser = async (req, res) => {
-
-  const { name, email, password} = req.body;
+  const { name, email, password } = req.body;
 
   try {
     let user = await User.findOne({ email: email });
 
     if (user) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "User already exists. Use diffrent mail Id",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "User already exists. Use a different email ID",
+      });
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -33,10 +29,14 @@ exports.registerUser = async (req, res) => {
       .status(200)
       .json({ success: true, message: "User successfully created" });
   } catch (error) {
-    console.log(error);
+    console.error("Error during registration:", error); // Log the error details
     return res
       .status(500)
-      .json({ success: false, message: "Something went wrong" });
+      .json({
+        success: false,
+        message: "Something went wrong",
+        error: error.message,
+      });
   }
 };
 
