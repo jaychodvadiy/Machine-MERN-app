@@ -6,28 +6,31 @@ import { useNavigate } from 'react-router-dom';
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    onSubmit: async (values, { setSubmitting, setErrors }) => {
-      try {
-        const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-        const response = await axios.post(`${API_URL}/auth/login`, values);
-        console.log("Login successful:", response.data);
-        navigate("/dashboard");
-      } catch (error) {
-        if (error.response) {
-          setErrors({ submit: error.response.data.message || "Login failed" });
-        } else {
-          setErrors({ submit: "Network error: Unable to reach the server" });
-        }
-      } finally {
-        setSubmitting(false);
+ const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+
+const formik = useFormik({
+  initialValues: {
+    email: "",
+    password: "",
+  },
+  onSubmit: async (values, { setSubmitting, setErrors }) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/api/auth/login`, values);
+      console.log("Login successful:", response.data);
+      navigate("/dashboard");
+    } catch (error) {
+      if (error.response) {
+        setErrors({ submit: error.response.data.message || "Login failed" });
+      } else {
+        setErrors({ submit: "Network error: Unable to reach the server" });
       }
+    } finally {
+      setSubmitting(false);
     }
-  });
+  },
+});
+
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">

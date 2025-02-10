@@ -7,16 +7,27 @@ const AdminDashboard = () => {
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
   useEffect(() => {
-    // Fetch agent count and uploaded files
     const fetchData = async () => {
-      const agentResponse = await axios.get("http://localhost:5000/api/agents");
-      const fileResponse = await axios.get("http://localhost:5000/api/lists");
+      const BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
-      setAgentCount(agentResponse.data.length);
-      setUploadedFiles(fileResponse.data);
+      try {
+        const agentResponse = await axios.get(BASE_URL);
+        setAgentCount(agentResponse.data.length);
+      } catch (error) {
+        console.error("Error fetching agents:", error.response?.data || error.message);
+      }
+
+      try {
+        const fileResponse = await axios.get(BASE_URL);
+        setUploadedFiles(fileResponse.data);
+      } catch (error) {
+        console.error("Error fetching uploaded files:", error.response?.data || error.message);
+      }
     };
+
     fetchData();
   }, []);
+
 
   return (
     <div>
