@@ -1,29 +1,22 @@
 const mongoose = require("mongoose");
 
 const dbConnect = async () => {
+  if (mongoose.connection.readyState >= 1) {
+    console.log("⚡ Using existing database connection");
+    return;
+  }
+
   try {
-    await mongoose.connect(
-      process.env.MONGO_URI
-    );
+    await mongoose.connect(process.env.MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
     console.log("✅ MongoDB connected successfully");
   } catch (error) {
     console.error("❌ MongoDB connection error:", error);
-    process.exit(1); // Exit on failure
+    process.exit(1);
   }
 };
-
-// Event Listeners for Debugging
-// mongoose.connection.on("connected", () => {
-//   console.log("✅ Mongoose connected to DB");
-// });
-
-// mongoose.connection.on("error", (err) => {
-//   console.error("❌ Mongoose connection error:", err);
-// });
-
-// mongoose.connection.on("disconnected", () => {
-//   console.log("⚠️ Mongoose disconnected");
-// });
 
 module.exports = dbConnect;

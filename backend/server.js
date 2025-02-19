@@ -1,19 +1,43 @@
-const express = require("express");
-const dotenv = require('dotenv').config();
-const cors = require("cors");
-const dbConnect = require("./config/db");
+import express from "express";
+import dotenv from "dotenv";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import dbConnect from "./config/db.js";
+import authRoute from "./routes/authRouter.js";
+import userRoute from "./routes/users.js";
+import tourRoute from "./routes/tours.js";
+import reviewRoute from "./routes/review.js";
+import bookingRoute from "./routes/bookings.js";
+import bodyParser from "body-parser";
+
+dotenv.config();
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+const port = process.env.PORT || 8000;
 
-// Connect to MongoDB
 dbConnect();
 
-// Use the auth routes
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/agents", require("./routes/agentRoutes"));
-app.use("/api/lists", require("./routes/listRoutes"));
+// CORS Middleware
+const corsOptions = {
+  origin: "http://localhost:3000", // ✅ Make sure this matches your frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true, // ✅ Required for cookies/auth
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Middleware
+app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.json());
+
+// Routes
+app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/tours", tourRoute);
+app.use("/api/v1/users", userRoute);
+app.use("/api/v1/review", reviewRoute);
+app.use("/api/v1/booking", bookingRoute);
+
+app.listen(port, () => {
+  console.log(`🚀 Server running on port ${port}`);
+});
