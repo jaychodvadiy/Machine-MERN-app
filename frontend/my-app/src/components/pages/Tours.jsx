@@ -12,9 +12,9 @@ const Tours = () => {
   const [page, setPage] = useState(0);
 
   // Fetch tours and tour count
-  const { data: tourCount } = useFetch(`${BASE_URL}api/v1/tours`);
+  const { data: tourCount } = useFetch(`${BASE_URL}/v1/tours`);
 
-  const { data, loading, error } = useFetch(`${BASE_URL}api/v1/tours`);
+  const { data, loading, error } = useFetch(`${BASE_URL}/v1/tours`);
 
   console.log("Fetched Data:", data); // Debugging
 

@@ -1,44 +1,78 @@
+import Review from "../models/Review.js";
+import Tour from "../models/Tour.js";
+import mongoose from "mongoose";
+
 export const createReview = async (req, res) => {
-  console.log("Incoming Request Body:", req.body); // 🔹 Debugging log
-  console.log("Tour ID:", req.params.tourId);
+ 
+  const { tourId } = req.params;
 
-  if (!req.body || Object.keys(req.body).length === 0) {
+  if (!mongoose.Types.ObjectId.isValid(tourId)) {
+    console.log(" Invalid Tour ID:", tourId);
     return res
       .status(400)
-      .json({ success: false, message: "Invalid JSON request" });
-  }
-
-  const { username, reviewText, rating } = req.body;
-
-  if (!username || !reviewText || !rating) {
-    return res
-      .status(400)
-      .json({ success: false, message: "Missing required fields" });
+      .json({
+        success: false,
+        message: "Invalid Tour ID format, review not stored",
+      });
   }
 
   try {
+    const tourExists = await Tour.findById(tourId);
+    if (!tourExists) {
+      console.log(" Tour not found:", tourId);
+      return res
+        .status(404)
+        .json({ success: false, message: "Tour not found, review not stored" });
+    }
+
+    let { username, reviewText, rating } = req.body;
+
+    if (!username) {
+      console.log(" Missing username, assigning 'Anonymous'");
+      username = "Anonymous";
+    }
+
+    if (!reviewText) {
+      console.log(" Missing review text, assigning default message");
+      reviewText = "No review text provided.";
+    }
+
+    if (typeof rating !== "number" || rating < 1 || rating > 5) {
+      console.log("Invalid or missing rating, defaulting to 3");
+      rating = 3;
+    }
+
     const newReview = new Review({
       username,
       reviewText,
       rating,
-      productId: req.params.tourId,
+      productId: new mongoose.Types.ObjectId(tourId), 
     });
+
+    console.log(" Saving Review to Database:", newReview);
     const savedReview = await newReview.save();
+    console.log("Review saved successfully!", savedReview);
 
-    await Tour.findByIdAndUpdate(req.params.tourId, {
-      $push: { reviews: savedReview._id },
+    await Tour.findByIdAndUpdate(
+      tourId,
+      {
+        $push: { reviews: savedReview._id },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: "Review successfully stored",
+      data: savedReview,
     });
-
-    res
-      .status(200)
-      .json({ success: true, message: "Review Submitted", data: savedReview });
   } catch (err) {
-    console.error("Review Submission Error:", err);
+    console.error("🚨 Database Error:", err);
     res
       .status(500)
       .json({
         success: false,
-        message: "Failed to Submit",
+        message: "Internal Server Error",
         error: err.message,
       });
   }

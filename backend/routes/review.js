@@ -1,9 +1,11 @@
-import express from 'express'
-import { createReview } from '../controllers/reviewController.js'
-import { verifyUser } from '../utils/verifyToken.js'
+import express from 'express';
+import { createReview } from '../controllers/reviewController.js';
 
-const router=express.Router()
+const router = express.Router();
 
-router.post('/:tourId' ,verifyUser, createReview)
+router.post('/:tourId', (req, res, next) => {
+    console.log("🔍 Received tourId in route:", req.params.tourId);
+    next();
+}, createReview);
 
-export default router
+export default router;

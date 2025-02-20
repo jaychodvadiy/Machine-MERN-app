@@ -5,7 +5,7 @@ import useFetch from "../../hooks/useFetch.js";
 import { BASE_URL } from "../../utils/config.js";
 
 const FeaturedTourList = () => {
-  const { data, loading, error } = useFetch(`${BASE_URL}api/v1/tours`);
+  const { data, loading, error } = useFetch(`${BASE_URL}/v1/tours`);
 
   console.log("API Response Data:", data);
   console.log("Type of data:", typeof data);

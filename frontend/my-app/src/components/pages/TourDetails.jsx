@@ -17,7 +17,7 @@ const TourDetails = () => {
   const { user } = useContext(AuthContext);
 
   // Fetch tour details
-  const { data: tour, loading, error } = useFetch(`${BASE_URL}/tours/${id}`);
+  const { data: tour, loading, error } = useFetch(`${BASE_URL}/v1/tours/${id}`);
 
   useEffect(() => {
     window.scrollTo(0, 0);
