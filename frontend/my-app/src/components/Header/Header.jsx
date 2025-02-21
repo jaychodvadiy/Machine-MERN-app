@@ -64,7 +64,7 @@ const Header = () => {
           {/*=============menu start===========*/}
           <div className='navigation'>
             <ul className='menu d-flex align-items-left gap-2 custom-menu'>
-              {
+              {   
                 nav_links.map((item, index) => (
                   <li className='nav__item' key={index}>
                     <NavLink to={item.path} className={navClass => navClass.isActive ? "active__link" : ""}>

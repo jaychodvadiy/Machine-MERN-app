@@ -82,7 +82,7 @@
 .review__input input{
     width: 100%;
     padding: 0.5rem 0;
-    /* border: none; */
+    border: none;
 }
 
 .review__input input:focus{

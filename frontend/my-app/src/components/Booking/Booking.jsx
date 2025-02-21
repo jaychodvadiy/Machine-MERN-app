@@ -7,20 +7,20 @@ import { BASE_URL } from '../../utils/config'
 
 const Booking = ({ tour, avgRating }) => {
   const { price, reviews, title } = tour;
-
   const navigate = useNavigate();
-
   const { user } = useContext(AuthContext);
 
-  // const [booking, setBooking] = useState({
-  //   userId: user && user._id,
-  //   userEmail: user && user.email,
-  //   tourName: title,
-  //   fullName: '',
-  //   phone: '',
-  //   guestSize: 1,
-  //   bookAt: ''
-  // })
+  // Define the booking state correctly
+  const [booking, setBooking] = useState({
+    userId: user ? user._id : '',
+    userEmail: user ? user.email : '',
+    tourName: title,
+    fullName: '',
+    phone: '',
+    guestSize: 1,  
+    bookAt: ''
+  });
+
 
   const handleChange = e => {
     setBooking(prev => ({ ...prev, [e.target.id]: e.target.value }))
@@ -31,46 +31,46 @@ const Booking = ({ tour, avgRating }) => {
     console.log(booking);
 
     try {
-      if (!user || user === undefined || user === null) {
+      if (!user) {
         return alert('Please Sign In!');
       }
 
       const res = await fetch(`${BASE_URL}/v1/booking`, {
-        method: 'post',
+        method: 'POST',
         headers: {
-          'content-type': 'application/json',
+          'Content-Type': 'application/json',
         },
         credentials: 'include',
         body: JSON.stringify(booking)
-      })
+      });
 
-      const result = await res.json()
+      const result = await res.json();
 
       if (!res.ok) {
         return alert(result.message);
       }
+
       navigate("/thank-you");
 
     } catch (err) {
-      alert(err.message)
+      alert(err.message);
     }
-
   };
 
   const serviceFee = 200;
+  const totalAmount = Number(price) * Number(booking.guestSize) + Number(serviceFee);
 
-  const totalAmount = Number(price) * Number(booking.guestSize) + Number(serviceFee)
   return (
     <div className="booking">
       <div className="booking__top d-flex align-items-center justify-content-between">
         <h3>₹{price} <span>/per person</span></h3>
-
         <span className="tour__rating d-flex align-items-center">
           <i className="ri-star-s-fill"></i>
           {avgRating === 0 ? null : avgRating} ({reviews?.length})
         </span>
       </div>
-      {/*===================booking form start=======================*/}
+
+      {/*=================== Booking Form Start =======================*/}
       <div className="booking__form">
         <h5>Information</h5>
         <Form className="booking__info-form" onSubmit={handleClick}>
@@ -83,22 +83,20 @@ const Booking = ({ tour, avgRating }) => {
               required onChange={handleChange} />
           </FormGroup>
           <FormGroup className="d-flex align-items-center gap-3">
-            <input type="date" placeholder="" id="bookAt"
-              required onChange={handleChange} />
+            <input type="date" id="bookAt" required onChange={handleChange} />
             <input type="number" placeholder="Guest" id="guestSize"
               required onChange={handleChange} />
           </FormGroup>
-
         </Form>
       </div>
-      {/*====================booking form end========================*/}
+      {/*==================== Booking Form End ========================*/}
 
-      {/*====================booking end========================*/}
       <div className="booking__bottom">
         <ListGroup>
           <ListGroupItem className="border-0 px-0">
             <h5 className="d-flex align-items-center gap-1">
-            ₹{price} <i className="ri-close-line"></i>1 person</h5>
+              ₹{price} <i className="ri-close-line"></i>1 person
+            </h5>
             <span>₹{price}</span>
           </ListGroupItem>
           <ListGroupItem className="border-0 px-0">
@@ -115,9 +113,8 @@ const Booking = ({ tour, avgRating }) => {
           Book Now
         </Button>
       </div>
-
     </div>
-  )
+  );
 }
 
-export default Booking
+export default Booking;

@@ -24,8 +24,7 @@ const TourDetails = () => {
   }, [tour]);
 
   // Destructure tour details safely
-  const { photo, title, desc, price, address, reviews = [], city, distance, maxGroupSize } = tour || {};
-
+  const { photo, title, desc, price = 0, address, reviews = [], city, distance, maxGroupSize } = tour?.data || {};
   const { totalRating, avgRating } = calculateAvgRating(reviews);
 
   const submitHandler = async (e) => {
@@ -68,7 +67,7 @@ const TourDetails = () => {
           {error && <h4 className="text-center pt-5 text-danger">{error}</h4>}
           {!loading && !error && !tour && <h4 className="text-center pt-5">Tour not found.</h4>}
 
-          {!loading && !error && tour && (
+          {!loading && !error && tour    && (
             <Row>
               <Col lg="8">
                 <div className="tour__content">
@@ -85,7 +84,7 @@ const TourDetails = () => {
                       </span>
                     </div>
                     <div className="tour__extra-details">
-                      <span><i className="ri-map-pin-2-line"></i> {city}</span>
+                      <span><i className="ri-map-pin-2-line"></i> {city || "Unknown"}</span>
                       <span><i className="ri-money-dollar-circle-line"></i> ₹{price} / per person</span>
                       <span><i className="ri-map-pin-time-line"></i> {distance} km</span>
                       <span><i className="ri-group-line"></i> {maxGroupSize} people</span>
