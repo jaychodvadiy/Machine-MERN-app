@@ -13,11 +13,11 @@ const SearchResultList = () => {
     if (location.state) {
       setData(location.state);
     } else {
-      setData([]); // Handle empty state
+      setData([]); 
     }
   }, [location.state]);
 
-  console.log("Search Results Data:", data); // Debugging
+  console.log("Search Results Data:", data); 
 
   return (
     <>

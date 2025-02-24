@@ -13,8 +13,11 @@
   width: 76.8%;
 }
 
-.menu {
+.menuder {
   margin-bottom: 0;
+  cursor: pointer !important;
+  list-style-type: none;
+  display: flex;
 }
 
 .nav_wrapper {
@@ -24,11 +27,7 @@
 .navigation {
   display: flex;
 }
-.navigation ul li a {
-  list-style-type: none;
-  padding: 0px;
-  margin: 0px;
-}
+
 .nav__item a {
   text-decoration: none;
   color: var(--heading-color);
@@ -40,9 +39,8 @@
   color: inherit;
 }
 
-.secondary__btn{
-    text-decoration: none;
-    
+.secondary__btn {
+  text-decoration: none;
 }
 .mobile__menu {
   font-size: 1.3rem;
@@ -62,6 +60,6 @@
 }
 
 .custom-menu {
-  margin-right: 30px;
+  margin-right: 15  px;
   justify-content: space-between;
 }

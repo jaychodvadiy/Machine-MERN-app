@@ -1,26 +1,76 @@
 import Booking from "../models/Booking.js";
+import mongoose from "mongoose";
 
 export const createBooking = async (req, res) => {
-  console.log("📩 Incoming Booking Data:", req.body); // Log request body
-
-  const newBooking = new Booking(req.body);
   try {
-    const savedBooking = await newBooking.save();
-    console.log("✅ Booking Saved:", savedBooking); // Log stored data
-    res
+    console.log(" Incoming Booking Data:", req.body);
+
+    let {
+      userId,
+      userEmail,
+      fullName,
+      phone,
+      guestSize,
+      bookAt,
+      tourName,
+      price,
+    } = req.body;
+
+    userId = userId || ""; 
+    userEmail = userEmail || "";
+    fullName = fullName || "";
+    phone = phone || "";
+    guestSize = guestSize || 1;
+    bookAt = bookAt || new Date();
+    tourName = tourName || "";
+    price = price || 0.0;
+
+    console.warn("  Using default values for missing fields:", {
+      userId,
+      userEmail,
+      fullName,
+      phone,
+      guestSize,
+      bookAt,
+      tourName,
+      price,
+    });
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      console.warn("  Invalid userId provided, using default.");
+      userId = new mongoose.Types.ObjectId(); 
+    }
+
+    const newBooking = new Booking({
+      userId,
+      userEmail,
+      fullName,
+      phone,
+      guestSize,
+      bookAt,
+      tourName,
+      price,
+    });
+
+    await newBooking.save();
+
+    console.log("  Booking saved successfully:", newBooking);
+    return res
       .status(200)
       .json({
         success: true,
-        message: "Your tour is booked",
-        data: savedBooking,
+        message: "Booking processed successfully",
+        data: newBooking,
       });
-  } catch (err) {
-    console.error("❌ Error Saving Booking:", err);
-    res.status(500).json({ success: false, message: "Internal server error" });
+  } catch (error) {
+    console.error("  Error Saving Booking:", error);
+    return res
+      .status(500)
+      .json({ success: false, error: "Booking failed, please try again." });
   }
-};
+};  
 
-// Get single booking by ID
+  // Get single booking by ID
 export const getBooking = async (req, res) => {
   const { id } = req.params;
   try {

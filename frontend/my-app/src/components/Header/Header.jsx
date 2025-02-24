@@ -1,8 +1,6 @@
 import React, { useRef, useEffect, useContext } from 'react'
-// import { Container, Row, Button, ButtonDropdown } from 'reactstrap'
 import { Container, Row, Button } from 'reactstrap'
 import { NavLink, Link, useNavigate } from 'react-router-dom'
-// import logo from '../../assets/images/logo.png'
 import logo from '../../assets/images/logo.png'
 import './header.css'
 import { AuthContext } from '../../context/AuthContext'
@@ -12,10 +10,6 @@ const nav_links = [
     path: '/home',
     display: 'Home',
   },
-  // {
-  //   path: '/about',
-  //   display: 'About',
-  // },
   {
     path: '/tours',
     display: 'Tours',
@@ -63,8 +57,8 @@ const Header = () => {
           {/*=============logo end========== */}
           {/*=============menu start===========*/}
           <div className='navigation'>
-            <ul className='menu d-flex align-items-left gap-2 custom-menu'>
-              {   
+            <ul className='menuder align-items-left gap-2  custom-menu ' style={{marginRight:"15px"}}>
+              {
                 nav_links.map((item, index) => (
                   <li className='nav__item' key={index}>
                     <NavLink to={item.path} className={navClass => navClass.isActive ? "active__link" : ""}>

@@ -15,15 +15,15 @@
 .booking__top h3 span{
     font-size: 1.1rem;
     font-weight: 400;
-    color: var(--text-color);
+    /* color: var(--text-color); */
 }
 .Booknow{
-    border: none;
+    border: none !important;
     border-radius: 18px;
-    background-color: orange;
+    background-color: orange !important;
 }
 .Booknow:hover{
-    background-color: orangered;
+    background-color: orangered !important;
     color: white;
 }
 .booking__top span{
@@ -33,7 +33,7 @@
 }
 
 .booking__top span i{
-    color: var(--secondary-color);
+    /* color: var(--secondary-color); */
 }
 
 .booking__top {

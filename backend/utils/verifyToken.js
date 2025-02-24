@@ -25,9 +25,8 @@ export const verifyToken = (req, res, next) => {
 };
 
 export const verifyUser = (req, res, next) => {
-  // const authHeader = req.headers.authorization;
   req.user = { id: "dummyUserId", email: "test@example.com" };
-  console.log("🔧 Bypassing authentication...");
+  console.log(" Bypassing authentication...");
   next();
   if (!authHeader) {
     console.log(" No authorization header found.");
@@ -37,7 +36,7 @@ export const verifyUser = (req, res, next) => {
   }
 
   const token = authHeader.split(" ")[1];
-  console.log("🔍 Token received:", token);
+  console.log(" Token received:", token);
 
   jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
@@ -55,7 +54,6 @@ export const verifyUser = (req, res, next) => {
 export const verifyAdmin = (req, res, next) => {
   verifyToken(req, res, next, () => {
     if (req.user.role === "admin") {
-      // some changes here , added before or
       next();
     } else {
       return res

@@ -7,11 +7,11 @@ const useFetch = (url) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log(`🔍 Fetching from: ${url}`);
+      console.log(` Fetching from: ${url}`);
 
       try {
         const response = await fetch(url);
-        console.log("🔄 Fetch response:", response);
+        console.log(" Fetch response:", response);
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);

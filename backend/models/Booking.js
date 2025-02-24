@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
-
 const bookingSchema = new mongoose.Schema(
   {
     userId: {
       type: String,
-      required: true,
+      required: [true, "User ID is required"], 
     },
     userEmail: {
       type: String,
@@ -25,6 +24,7 @@ const bookingSchema = new mongoose.Schema(
     phone: {
       type: Number,
       required: true,
+      match: /^[0-9]{10}$/,
     },
     bookAt: {
       type: Date,

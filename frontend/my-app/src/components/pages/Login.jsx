@@ -8,7 +8,7 @@ import { BASE_URL } from "../../utils/config";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");  // ✅ Handle errors without dispatch
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -22,31 +22,28 @@ const Login = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    setError(""); // ✅ Reset previous errors
+    setError("");
 
     try {
 
       const res = await fetch(`${BASE_URL}/v1/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include",  // ✅ Important for cookies/auth
+        credentials: "include",
         body: JSON.stringify(credentials),
       });
-
-
       const result = await res.json();
-      // console.log("API Response:", result);
 
       if (!res.ok) {
-        setError(result.message || "Login failed!"); // ✅ Set error message
+        setError(result.message || "Login failed!"); 
         return;
       }
 
-      localStorage.setItem("user", JSON.stringify(result.user)); // ✅ Store user data
-      navigate("/"); // ✅ Redirect on success
+      localStorage.setItem("user", JSON.stringify(result.user)); 
+      navigate("/"); 
     } catch (err) {
       console.error("Error during login:", err);
-      setError("Something went wrong. Please try again!"); // ✅ Handle fetch errors
+      setError("Something went wrong. Please try again!"); 
     }
   };
 
@@ -64,7 +61,7 @@ const Login = () => {
                   <img src={userIcon} alt="" />
                 </div>
                 <h2>Login</h2>
-                {error && <p className="error-text">{error}</p>} {/* ✅ Show error message */}
+                {error && <p className="error-text">{error}</p>} 
                 <Form onSubmit={handleClick}>
                   <FormGroup>
                     <input

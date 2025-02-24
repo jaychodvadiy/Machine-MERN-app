@@ -67,7 +67,7 @@ export const createReview = async (req, res) => {
       data: savedReview,
     });
   } catch (err) {
-    console.error("🚨 Database Error:", err);
+    console.error(" Database Error:", err);
     res
       .status(500)
       .json({

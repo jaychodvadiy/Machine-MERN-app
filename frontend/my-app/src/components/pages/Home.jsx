@@ -4,12 +4,7 @@ import { Container, Row, Col } from 'reactstrap'
 import heroImg from "../../assets/images/hero-img01.jpg"
 import heroImg02 from '../../assets/images/hero-img02.jpg'
 import heroVideo from '../../assets/images/hero-video.mp4'
-// import worldImg from '../../assets/images/world.png'
-// import experienceImg from '../../assets/images/experience.png'
 import experienceImg from '../../assets/images/experience.png'
-
-// import Subtitle from '../../shared/Subtitle'
-// import SearchBar from '../../shared/SearchBar'
 import ServiceList from '../../services/ServiceList'
 import FeaturedTourList from '../Featured-tours/FeaturedTourList'
 import MasonryImagesGallery from '../Image-gallery/MasonryImagesGallery'
@@ -26,10 +21,6 @@ const Home = () => {
         <Row>
           <Col lg='6'>
             <div className="hero__content">
-              {/* <div className="hero__subtitle d-flex align-items-center">
-                   <Subtitle subtitle={'Travel and Explore!!'}/>
-                   <img src={worldImg} alt="" />                  
-               </div> */}
               <h1>Travelling opens  the doors to creating <span style={{ color: "orange" }}>memories</span> </h1>
               <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Omnis consequatur dolore nam modi labore facere id ut
@@ -54,7 +45,6 @@ const Home = () => {
               <img src={heroImg02} alt="" />
             </div>
           </Col>
-          {/* <SearchBar /> */}
         </Row>
       </Container>
     </section>
@@ -80,7 +70,6 @@ const Home = () => {
       <Container>
         <Row>
           <Col lg='22' className='mb-5'>
-            {/* <Subtitle subtitle={"Explore"} /> */}
             <h5 className='Experience'>
               Explore
             </h5>
@@ -102,7 +91,6 @@ const Home = () => {
         <Row>
           <Col lg='6'>
             <div className="experience__content">
-              {/* <Subtitle subtitle={'Experience'} /> */}
               <h5 className='Experience' >
                 Experience
               </h5>
@@ -144,7 +132,6 @@ const Home = () => {
       <Container>
         <Row>
           <Col lg='12'>
-            {/* <Subtitle subtitle={'Gallery'} />*/}
             <h5 style={{color: "orange"}}>
               Gallery
             </h5>
@@ -164,7 +151,6 @@ const Home = () => {
       <Container>
         <Row>
           <Col lg='12'>
-            {/* <Subtitle subtitle={'Fans Love'} /> */}
             <h5 className="services__subtitle">
                 Clients Lover
             </h5>

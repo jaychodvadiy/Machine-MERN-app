@@ -19,7 +19,7 @@ export const createTour = async (req, res) => {
 
         if (existingTour) {
           console.warn(`Duplicate tour title: ${ele.title} already exists.`);
-          return existingTour; // Prevents duplicate insertion
+          return existingTour; 
         }
 
         const newTour = new Tour(ele);
@@ -32,7 +32,7 @@ export const createTour = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Tours created successfully",
-      data: savedTours.filter(Boolean), // Remove undefined values if duplicates exist
+      data: savedTours.filter(Boolean), 
     });
   } catch (err) {
     console.error("Error saving tour:", err);
@@ -116,7 +116,7 @@ export const getSingleTour = async (req, res) => {
 export const getAllTour = async (req, res) => {
   try {
     const tours = await Tour.find({});
-    console.log("Fetched Tours:", tours); // Log fetched data
+    console.log("Fetched Tours:", tours); 
 
     res.status(200).json({
       success: true,

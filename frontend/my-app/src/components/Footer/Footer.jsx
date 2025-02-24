@@ -2,7 +2,6 @@ import React from 'react'
 import './footer.css'
 import { Container, Row , Col, ListGroup , ListGroupItem } from 'reactstrap'
 import { Link } from 'react-router-dom'
-// import logo from '../../assets/images/logo.png'
 import logo from '../../assets/images/logo.png'
 
 
@@ -44,21 +43,6 @@ const Footer = () => {
                 <img src={logo} alt="" />
                 <p>Life is a journey, enjoy the trip. Aim for the sky, but move slowly, enjoying every step along the way. 
                 It is all those little steps that make the journey complete.</p>
-
-                {/* <div className="social__links d-flex align-items-center gap-4">
-                  <span>
-                    <Link to='#'><i className="ri-youtube-line"></i></Link>
-                  </span>
-                  <span>
-                    <Link to='#'><i className="ri-github-fill"></i></Link>
-                  </span>
-                  <span>
-                    <Link to='#'><i className="ri-facebook-circle-line"></i></Link>
-                  </span>
-                  <span>
-                    <Link to='#'><i className="ri-instagram-line"></i></Link>
-                  </span>
-                </div> */}
               </div>
           </Col>
           <Col lg='3'>

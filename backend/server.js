@@ -19,9 +19,9 @@ dbConnect();
 
 // CORS Middleware
 const corsOptions = {
-  origin: "http://localhost:3000", // ✅ Make sure this matches your frontend URL
+  origin: "http://localhost:3000", 
   methods: ["GET", "POST", "PUT", "DELETE"],
-  credentials: true, // ✅ Required for cookies/auth
+  credentials: true, 
   allowedHeaders: ["Content-Type", "Authorization"],
 };
 app.use(cors(corsOptions));

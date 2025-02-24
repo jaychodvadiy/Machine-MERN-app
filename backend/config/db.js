@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const dbConnect = async () => {
   if (mongoose.connection.readyState >= 1) {
-    console.log("⚡ Using existing database connection");
+    console.log("Using existing database connection");
     return;
   }
 
